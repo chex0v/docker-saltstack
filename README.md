@@ -14,7 +14,7 @@ After this you can check work
 You must see like this
 
 ```
-~ docker container exec -it master salt '*' test.version
+docker container exec -it master salt '*' test.version
 
 slave2:
     3006.3
