@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+    master:
+      build:
+        context: .
+        dockerfile: docker/master/Dockerfile
+      restart: always
+      container_name: 'master'
+      volumes:
+        - './docker/master/conf:/etc/salt/master.d'
+      networks:
+        salt:
+          ipv4_address: 10.5.0.5
+    slave1:
+      build:
+        context: .
+        dockerfile: docker/slave1/Dockerfile
+      restart: always
+      depends_on:
+        - master
+      container_name: 'slave1'
+      volumes:
+        - './docker/slave1/conf:/etc/salt/minion.d'
+      networks:
+        salt:
+          ipv4_address: 10.5.0.6
+    slave2:
+      build:
+        context: .
+        dockerfile: docker/slave2/Dockerfile
+      restart: always
+      depends_on:
+        - master
+      container_name: 'slave2'
+      volumes:
+        - './docker/slave2/conf:/etc/salt/minion.d'
+      networks:
+        salt:
+          ipv4_address: 10.5.0.7
+
+networks:
+  salt:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
+
