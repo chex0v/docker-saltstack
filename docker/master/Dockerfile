@@ -9,6 +9,8 @@ RUN rpm --import https://repo.saltproject.io/salt/py3/redhat/7/x86_64/SALT-PROJE
 RUN curl -fsSL https://repo.saltproject.io/salt/py3/redhat/7/x86_64/latest.repo | tee /etc/yum.repos.d/salt.repo
 RUN yum clean expire-cache
 RUN yum install -y \
- salt-master 
+ salt-master \
+ openssh-server \
+ openssh-clients
 
 CMD ["salt-master"]
